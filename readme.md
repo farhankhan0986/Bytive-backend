@@ -1,71 +1,81 @@
-Bytive Backend Developer Intern Assignment
-💎 Overview
-This project is a backend service designed for a jewelry Product Detail Page (PDP). It manages product customization, dynamic pricing calculations, and real-time inventory availability checks. The focus is on robust data modeling, clean API design, and centralized error handling.
+# Bytive Backend Developer Intern Assignment
 
-🚀 Features
-Product Configuration: Support for multiple metals and ring sizes.
+## Overview
+This project is a backend service for a jewellery Product Detail Page.  
+You use this service to handle product customization, pricing, and inventory checks.
 
-Dynamic Pricing: Real-time calculation based on metal purity, weight, diamond carats, and making charges.
+The project focuses on backend logic, data modeling, and API clarity.  
+Frontend work, authentication, and payments are intentionally excluded.
 
-Exchange Program: Support for exchange discounts (15%).
+---
 
-Inventory Tracking: Check stock and estimated delivery times for specific product combinations.
+## Features
+- Product configuration with multiple metals and ring sizes
+- Dynamic pricing based on metal purity, weight, diamond carat, and making charges
+- Exchange support with a fixed 15 percent discount
+- Inventory checks with stock status and delivery timelines
+- Input validation with clear error responses
+- Centralized error handling across all APIs
 
-Validation: Strict input validation with meaningful error responses.
+---
 
-Centralized Error Handling: Consistent JSON error structures across all endpoints.
+## Tech Stack
+- Node.js
+- Express.js
+- In memory JavaScript objects for data storage
 
-🛠 Tech Stack
-Runtime: Node.js
+---
 
-Framework: Express.js
-
-Storage: In-memory JavaScript objects (for rapid prototyping and assessment).
-
-📂 Project Structure
-Plaintext
-├── index.js               # Entry point of the application
-├── data                   # Mock database (In-memory storage)
-│   ├── products.js
-│   ├── metals.js
-│   ├── diamonds.js
-│   └── inventory.js
-├── routes                 # API Route definitions
-│   ├── products.js
-│   ├── pricing.js
-│   └── availability.js
-├── services               # Business logic & pricing algorithms
-│   └── pricingService.js
-├── utils                  # Helper functions & middleware
-│   └── validateRequest.js
+## Project Structure
+├── index.js
+├── data
+│ ├── products.js
+│ ├── metals.js
+│ ├── diamonds.js
+│ └── inventory.js
+├── routes
+│ ├── products.js
+│ ├── pricing.js
+│ └── availability.js
+├── services
+│ └── pricingService.js
+├── utils
+│ └── validateRequest.js
 └── README.md
-⚙️ Setup Instructions
-Clone the repository (or navigate to the project folder).
 
-Install dependencies:
 
-Bash
+---
+
+## Setup Instructions
+1. Navigate to the project directory.
+2. Install dependencies.
 npm install
-Start the server:
 
-Bash
+3. Start the server.
 node index.js
-Access the API: The server will be running at http://localhost:3000.
 
-🛣 API Endpoints
-1. Get Product Details
-GET /api/products/:id
+4. Access the API at:
+http://localhost:3000
 
-Fetches configuration options for a specific product.
 
-2. Calculate Price
-POST /api/price
+---
 
-Calculates the total price based on user selection.
+## API Endpoints
 
-Request Body:
+### Get Product Details
+GET `/api/products/:id`
 
-JSON
+Example:
+GET /api/products/ring_aurora
+
+
+---
+
+### Calculate Price
+POST `/api/price`
+
+Request body:
+```json
 {
   "productId": "ring_aurora",
   "metal": "gold",
@@ -76,7 +86,6 @@ JSON
 }
 Response:
 
-JSON
 {
   "finalPrice": 57500,
   "breakdown": {
@@ -86,14 +95,11 @@ JSON
     "exchangeApplied": false
   }
 }
-3. Check Availability
+Check Availability
 POST /api/availability
 
-Checks if a specific configuration is in stock.
+Request body:
 
-Request Body:
-
-JSON
 {
   "productId": "ring_aurora",
   "metal": "gold",
@@ -101,24 +107,41 @@ JSON
   "ringSize": 7,
   "diamondCarat": "0.5"
 }
-⚖️ Business Logic & Assumptions
-Pricing Logic
-Metal Price: Rate per gram * Weight
+Response:
 
-Diamond Price: Based on selected carat weight.
+{
+  "inStock": true,
+  "deliveryDays": 14
+}
+Validation and Error Handling
+Missing required fields return status code 400
 
-Making Charges: Fixed fee per product.
+Invalid products or unsupported configurations return status code 422
 
-Exchange: Applies a 15% discount to the total price if exchange is true.
+Error responses follow a consistent JSON structure
 
-Validation
-400 Bad Request: Returned if required fields are missing.
+Errors are handled centrally using Express middleware
 
-422 Unprocessable Entity: Returned for invalid product IDs or unsupported configurations.
+Business Logic
+Pricing Rules
+Metal price equals rate per gram multiplied by weight
+
+Diamond price depends on selected carat
+
+Making charges are fixed per product
+
+Exchange applies a fixed 15 percent discount
 
 Assumptions
-Metal and diamond rates are static for the purpose of this assignment.
+Metal and diamond prices are static
 
-Each product is limited to a single diamond.
+Weight is provided by the client
 
-Authentication and payment processing are out of scope.
+Each product supports a single diamond
+
+Authentication and payment flows are out of scope
+
+Purpose
+This project demonstrates clean backend design, practical pricing logic, validation discipline, and real product driven API behavior.
+
+::contentReference[oaicite:0]{index=0}
