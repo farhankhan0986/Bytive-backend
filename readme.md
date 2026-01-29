@@ -20,13 +20,14 @@ Frontend work, authentication, and payments are intentionally excluded.
 ---
 
 ## Tech Stack
-- Node.js
-- Express.js
-- In memory JavaScript objects for data storage
+- Node.js  
+- Express.js  
+- In memory JavaScript objects for data storage  
 
 ---
 
 ## Project Structure
+```
 ├── index.js
 ├── data
 │ ├── products.js
@@ -42,37 +43,39 @@ Frontend work, authentication, and payments are intentionally excluded.
 ├── utils
 │ └── validateRequest.js
 └── README.md
-
+```
 
 ---
 
 ## Setup Instructions
 1. Navigate to the project directory.
-2. Install dependencies.
-npm install
-
-3. Start the server.
-node index.js
-
-4. Access the API at:
-http://localhost:3000
-
+2. Install dependencies.  
+   ```
+   npm install
+   ```
+3. Start the server.  
+   ```
+   node index.js
+   ```
+4. Access the API at:  
+   `http://localhost:3000`
 
 ---
 
 ## API Endpoints
 
 ### Get Product Details
-GET `/api/products/:id`
+**GET** `/api/products/:id`
 
-Example:
+Example:  
+```
 GET /api/products/ring_aurora
-
+```
 
 ---
 
 ### Calculate Price
-POST `/api/price`
+**POST** `/api/price`
 
 Request body:
 ```json
@@ -84,8 +87,10 @@ Request body:
   "diamondCarat": "0.5",
   "exchange": false
 }
-Response:
+```
 
+Response:
+```json
 {
   "finalPrice": 57500,
   "breakdown": {
@@ -95,11 +100,15 @@ Response:
     "exchangeApplied": false
   }
 }
-Check Availability
-POST /api/availability
+```
+
+---
+
+### Check Availability
+**POST** `/api/availability`
 
 Request body:
-
+```json
 {
   "productId": "ring_aurora",
   "metal": "gold",
@@ -107,41 +116,43 @@ Request body:
   "ringSize": 7,
   "diamondCarat": "0.5"
 }
-Response:
+```
 
+Response:
+```json
 {
   "inStock": true,
   "deliveryDays": 14
 }
-Validation and Error Handling
-Missing required fields return status code 400
+```
 
-Invalid products or unsupported configurations return status code 422
+---
 
-Error responses follow a consistent JSON structure
+## Validation and Error Handling
+- Missing required fields return status code 400
+- Invalid products or unsupported configurations return status code 422
+- Error responses follow a consistent JSON structure
+- Errors are handled centrally using Express middleware
 
-Errors are handled centrally using Express middleware
+---
 
-Business Logic
-Pricing Rules
-Metal price equals rate per gram multiplied by weight
+## Business Logic
 
-Diamond price depends on selected carat
+### Pricing Rules
+- Metal price equals rate per gram multiplied by weight
+- Diamond price depends on selected carat
+- Making charges are fixed per product
+- Exchange applies a fixed 15 percent discount
 
-Making charges are fixed per product
+---
 
-Exchange applies a fixed 15 percent discount
+## Assumptions
+- Metal and diamond prices are static
+- Weight is provided by the client
+- Each product supports a single diamond
+- Authentication and payment flows are out of scope
 
-Assumptions
-Metal and diamond prices are static
+---
 
-Weight is provided by the client
-
-Each product supports a single diamond
-
-Authentication and payment flows are out of scope
-
-Purpose
+## Purpose
 This project demonstrates clean backend design, practical pricing logic, validation discipline, and real product driven API behavior.
-
-::contentReference[oaicite:0]{index=0}
